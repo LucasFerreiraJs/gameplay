@@ -6,7 +6,7 @@ import {
   TouchableOpacityProps
 } from 'react-native'
 import {Feather} from '@expo/vector-icons'
-import { styles } from "../ButtonAdd/styles";
+import { styles } from "./styles";
 import { theme } from "../../global/styles/theme";
 
 import { GuildIcon} from '../GuildIcon'

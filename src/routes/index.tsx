@@ -2,14 +2,20 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 
 import { AuthRoutes } from './auth.routes'
+import { useAuth } from '../hooks/auth';
+import { SignIn } from '../screens/SignIn';
 
 export function Routes() {
-  return (
 
-      <NavigationContainer>
+	const { user } = useAuth();
+	console.log("index rotas user ", user);
 
-        <AuthRoutes />
-      </NavigationContainer>
+	return (
 
-  );
+		<NavigationContainer>
+			{user.id ? <AuthRoutes /> : <SignIn />}
+			{/* <SignIn /> */}
+		</NavigationContainer>
+
+	);
 }

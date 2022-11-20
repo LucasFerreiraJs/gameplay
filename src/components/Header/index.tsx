@@ -7,7 +7,7 @@ import { BorderlessButton, BorderlessButtonProps } from 'react-native-gesture-ha
 
 import { LinearGradient } from 'expo-linear-gradient'
 import { theme } from '../../global/styles/theme';
-import { Feather } from '@expo/vector-icons'
+import { Feather} from '@expo/vector-icons'
 import { styles } from './styles';
 import { useNavigation } from '@react-navigation/native';
 
@@ -15,6 +15,7 @@ type Props = {
   title: string;
   action?: ReactNode;
 }
+
 
 export function Header({ title, action }: Props) {
   const { secondary100, secondary40, heading } = theme.colors
@@ -45,8 +46,8 @@ export function Header({ title, action }: Props) {
         {title}
       </Text>
       {
-        action &&
-        <View>{action}</View>
+        action ? <View>{action}</View>
+		: <View style={{width: 24}}></View>
       }
     </LinearGradient>
   )

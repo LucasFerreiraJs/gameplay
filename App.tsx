@@ -1,5 +1,8 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, LogBox } from 'react-native';
+
+
+LogBox.ignoreLogs(["You are not currently signed in to Expo on your development machine."])
 
 import { Home } from './src/screens/Home';
 
@@ -11,34 +14,40 @@ import { Inter_400Regular, Inter_500Medium } from '@expo-google-fonts/inter';
 import { Rajdhani_500Medium, Rajdhani_700Bold } from '@expo-google-fonts/rajdhani';
 import { Background } from './src/components/Background'
 
+// hooks
+import { AuthProvider } from "./src/hooks/auth";
+
 import AppLoading from 'expo-app-loading';
 
 export default function App() {
 
-  // return bool
-  const [fontsLoaded] = useFonts({
-    Inter_400Regular,
-    Inter_500Medium,
-    Rajdhani_500Medium,
-    Rajdhani_700Bold,
-  });
+	// return bool
+	const [fontsLoaded] = useFonts({
+		Inter_400Regular,
+		Inter_500Medium,
+		Rajdhani_500Medium,
+		Rajdhani_700Bold,
+	});
 
-  if (!fontsLoaded) {
-    // segura tela de splash
-    return <AppLoading />
-  }
+	if (!fontsLoaded) {
+		// segura tela de splash
+		return <AppLoading />
+	}
 
-  return (
-    <>
-      <Background>
-        <StatusBar
-          barStyle='light-content'
-          backgroundColor='transparent'
-          translucent={true}
-        />
-        <Routes />
+	return (
+		<>
+			<Background>
+				<StatusBar
+					barStyle='light-content'
+					backgroundColor='transparent'
+					translucent={true}
+				/>
 
-      </Background>
-    </>
-  );
+				<AuthProvider>
+					<Routes />
+				</AuthProvider>
+
+			</Background>
+		</>
+	);
 };

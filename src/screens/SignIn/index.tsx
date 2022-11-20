@@ -1,54 +1,64 @@
-import React, { useState } from 'react'
+import React from 'react';
 import {
-  View,
-  Text,
-  Image,
-
+	View,
+	Text,
+	Image,
+	Alert,
+	ActivityIndicator
 } from 'react-native';
 
-import { Background } from '../../components/Background'
-import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../hooks/auth';
 
-import { styles } from './styles'
-import Illustration from '../../assets/illustration.png';
+import IllustrationImg from '../../assets/illustration.png';
+import { theme } from '../../global/styles/theme';
+import { styles } from './styles';
 
 import { ButtonIcon } from '../../components/ButtonIcon';
+import { Background } from '../../components/Background';
 
 export function SignIn() {
-  const navigation = useNavigation();
+	const { loading, signIn } = useAuth();
 
-  function handleSignIn() {
-    navigation.navigate('Home');
-  }
+	async function handleSignIn() {
+		try {
+			await signIn();
+		} catch (error: any) {
+			Alert.alert(error);
+		}
+	}
 
-  return (
-    <Background>
-      <View style={styles.container}>
+	console.log("loading", loading)
 
-        <Image
-          source={Illustration}
-          resizeMode="stretch"
-        />
+	return (
+		<Background>
+			<View style={styles.container}>
+				<Image
+					source={IllustrationImg}
+					style={styles.image}
+					resizeMode="stretch"
+				/>
 
-        <View style={styles.content}>
-          <Text style={styles.title} >
-            Conecte-se {`\n`}
-            e organize suas {`\n`}
-            jogatinas
-          </Text>
+				<View style={styles.content}>
+					<Text style={styles.title}>
+						Conecte-se {'\n'}
+						e organize suas {'\n'}
+						jogatinas
+					</Text>
 
-          <Text style={styles.subtitle}>
-            Crie grupos para jogar seus games{`\n`}
-            favoritos com seus amigos
-          </Text>
+					<Text style={styles.subtitle}>
+						Crie grupos para jogar seus games {'\n'}
+						favoritos com seus amigos
+					</Text>
 
-          <ButtonIcon
-            title="Entre com Discord"
-            // activeOpacity={0.7}
-            onPress={handleSignIn}
-          />
-        </View>
-      </View>
-    </Background>
-  );
-};
+					{
+						loading ? <ActivityIndicator color={theme.colors.primary} /> :
+							<ButtonIcon
+								title="Entrar com Discord"
+								onPress={handleSignIn}
+							/>
+					}
+				</View>
+			</View>
+		</Background>
+	);
+}
